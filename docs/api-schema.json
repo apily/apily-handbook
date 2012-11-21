@@ -1,0 +1,402 @@
+{
+  "type": "object",
+  "properties": {
+    "author": {
+      "type": "string", 
+      "description": "author name.",
+      "required": true
+    },
+    "name": {
+      "type": "string", 
+      "description": "service name.",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "description": "service description.",
+      "require": false
+    },
+    "protocol": {
+      "type": "string",
+      "enum": ["http", "https"],
+      "description": "the api protocol.",
+      "required": true
+    },
+    "url": {
+      "type": [
+        {
+          "type": "string",
+          "required": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string",
+              "description": "The full URL. Both the protocol and host are lowercased."
+            },
+            "protocol": {
+              "type": "string",
+              "description": "The request protocol, lowercased."
+            },
+            "host": {
+              "type": "string",
+              "description": "The full lowercased host portion of the URL, including port information."
+            },
+            "hostname": {
+              "type": "string",
+              "description": "Just the lowercased hostname portion of the host."
+            },
+            "port": {
+              "type": "string",
+              "description": "The port number portion of the host."
+            }
+          },
+          "required": true
+        }
+      ],
+      "description": "service base url.",
+      "required": true
+    },
+    "auth": {
+      "type": "object",
+      "required": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "authorization mechanism.",
+          "required": true
+        },
+        "request_token": {
+          "type": "string",
+          "description": "oauth request token url.",
+          "required": true
+        },
+        "authorize": {
+          "type": "string",
+          "description": "oauth authorize url.",
+          "required": true            
+        },
+        "access_token": {
+          "type": "string",
+          "description": "oauth access token url.",
+          "required": true
+        },
+        "version": {
+          "type": "string",
+          "description": "oauth version.",
+          "enum": ["1.0", "1.0A", "2.0"],
+          "required": true
+        },
+        "signature_method": {
+          "type": "string",
+          "description": "oauth signature method.",
+          "enum": ["HMAC-SHA1", "PLAIN-TEXT"],
+          "required": true
+        }
+      }
+    },
+    "endpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "endpoint name.",
+            "required": true
+          },
+          "group": {
+            "type": "string",
+            "description": "endpoint group (if any)",
+            "required": false
+          },
+          "description": {
+            "type": "string",
+            "description": "endpoint description.",
+            "required": true
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string",
+                "description": "http(s) method.",
+                "enum": ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "TRACE", "CONNECT", "PATCH"],
+                "required": true
+              },
+              "url": {
+                "type": [
+                  {
+                    "type": "string",
+                    "required": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "href": {
+                        "type": "string",
+                        "description": "The full URL. Both the protocol and host are lowercased."
+                      },
+                      "protocol": {
+                        "type": "string",
+                        "description": "The request protocol, lowercased."
+                      },
+                      "host": {
+                        "type": "string",
+                        "description": "The full lowercased host portion of the URL, including port information."
+                      },
+                      "hostname": {
+                        "type": "string",
+                        "description": "Just the lowercased hostname portion of the host."
+                      },
+                      "port": {
+                        "type": "string",
+                        "description": "The port number portion of the host."
+                      }
+                    },
+                    "required": true
+                  }
+                ]
+              },
+              "examples": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "request example."
+                },
+                "description": "list of request examples."
+              },
+              "use_jsonp": {
+                "type": "boolean",
+                "description": "use jsonp?",
+                "required": false,
+                "default": false
+              },
+              "require_auth": {
+                "type": "boolean",
+                "description": "require oauth?",
+                "required": true
+              },
+              "template": {
+                "type": "array",
+                "description": "list of parameters in the url.",
+                "items": {
+                  "type": "object",
+                  "description": "parameter description.",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "parameter name.",
+                      "required": true
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "parameter type.",
+                      "enum": ["string", "number", "boolean"],
+                      "required": false,
+                      "default": "string"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "parameter description.",
+                      "required": true
+                    },
+                    "required": {
+                      "type": "string",
+                      "description": "is required?",
+                      "required": false,
+                      "default": true
+                    },
+                    "enum": {
+                      "type": "array",
+                      "description": "possible values.",
+                      "items": {
+                        "type": "string",
+                        "description": "possible value"
+                      },
+                      "required": false
+                    },
+                    "default": {
+                      "type": "string",
+                      "description": "default value.",
+                      "required": false
+                    }
+                  }
+                }
+              },
+              "querystring": {
+                "type": "array",
+                "description": "list of key-value pairs in the query-string.",
+                "items": {
+                  "type": "object",
+                  "description": "key-value description.",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "parameter name.",
+                      "required": true
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "parameter type.",
+                      "enum": ["string", "number", "boolean"],
+                      "required": false,
+                      "default": "string"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "parameter description.",
+                      "required": true
+                    },
+                    "required": {
+                      "type": "string",
+                      "description": "is required?",
+                      "required": false,
+                      "default": true
+                    },
+                    "enum": {
+                      "type": "array",
+                      "description": "possible values.",
+                      "items": {
+                        "type": "string",
+                        "description": "possible value"
+                      },
+                      "required": "false"
+                    },
+                    "default": {
+                      "type": "string",
+                      "description": "default value.",
+                      "required": false
+                    }
+                  }
+                }
+              },
+              "header": {
+                "type": "array",
+                "description": "list of key-value pair in the http header.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "key.",
+                      "required": true
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "value.",
+                      "required": true
+                    }
+                  }
+                },
+                "required": false
+              }
+            }
+          },
+          "body": {
+            "type": "array",
+            "description": "body of the request.",
+            "required": false,
+            "items": {
+              "type": "object",
+              "properties": {
+                "mime": {
+                  "type": "string",
+                  "description": "mime type.",
+                  "required": true,
+                  "default": "application/json"
+                },
+                "form": {
+                  "type": "array",
+                  "description": "list of key-value pair in the body (if mime is application/x-www-url-form-encoded).",
+                  "items": {
+                    "type": "object",
+                    "description": "parameter description.",
+                    "required": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "parameter name.",
+                        "required": true
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "parameter type.",
+                        "enum": ["string", "number", "boolean"],
+                        "required": false,
+                        "default": "string"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "parameter description.",
+                        "required": true
+                      },
+                      "required": {
+                        "type": "string",
+                        "description": "is required?",
+                        "required": false,
+                        "default": true
+                      },
+                      "enum": {
+                        "type": "array",
+                        "description": "possible values.",
+                        "items": {
+                          "type": "string",
+                          "description": "possible value"
+                        },
+                        "required": "false"
+                      },
+                      "default": {
+                        "type": "string",
+                        "description": "default value.",
+                        "required": false
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "string",
+                  "description": "json schema (if mime is application/json).",
+                  "required": false
+                }
+              }
+            }
+          },
+          "response": {
+            "type": "array",
+            "description": "possible responses.",
+            "items": {
+              "type": "object",
+              "description": "the response.",
+              "required": true,
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "the status code.",
+                  "required": true
+                },
+                "mime": {
+                  "type": "string",
+                  "description": "the mime type.",
+                  "required": true
+                },
+                "description": {
+                  "type": "string",
+                  "description": "the description.",
+                  "required": true
+                },
+                "examples": {
+                  "type": "array",
+                  "items": {
+                    "type": ["string", "object"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};

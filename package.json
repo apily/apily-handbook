@@ -1,0 +1,20 @@
+{
+  "name": "apily-handbook",
+  "description": "Apily handbook",
+  "version": "0.0.1",
+  "maintainers": [
+    {
+      "name": "Enrico Marino",
+      "email": "enrico.marino@email.com"
+    },
+    {
+      "name": "Federico Spini",
+      "email": "federico.spini@gmail.com"
+    }
+  ],
+  "main": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:apily/apily-handbook.git"
+  }
+}
